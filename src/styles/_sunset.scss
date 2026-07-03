@@ -1,0 +1,92 @@
+@use 'tokens' as *;
+
+.sunset {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.sunset__scene {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sunset__scene line,
+.sunset__scene path {
+  fill: none;
+  stroke: hsl(45, 100%, 88%);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sunset__disc {
+  stroke-width: 4.5;
+  fill: hsl(38, 100%, 72%);
+  fill-opacity: 0.35;
+}
+
+.sunset__ray {
+  stroke-width: 4.75;
+  transform-origin: center;
+  animation: sunset-ray 2.4s ease-in-out infinite;
+}
+
+.sunset__horizon {
+  stroke-width: 3;
+  stroke: hsl(45, 90%, 82%);
+  opacity: 0.55;
+}
+
+.sunset__water-line {
+  stroke-width: 3.5;
+  stroke: hsl(45, 85%, 80%);
+  opacity: 0.7;
+}
+
+.sunset__water-line--near {
+  stroke-width: 4;
+  opacity: 0.85;
+}
+
+.sunset__sun {
+  transform-origin: 100px 58px;
+  animation: sunset-sink 2.4s ease-in-out infinite;
+}
+
+@keyframes sunset-sink {
+  0%,
+  12% {
+    transform: translateY(-6px);
+  }
+
+  55%,
+  100% {
+    transform: translateY(34px);
+  }
+}
+
+@keyframes sunset-ray {
+  0%,
+  12% {
+    opacity: 1;
+    stroke-width: 4.75;
+  }
+
+  55%,
+  100% {
+    opacity: 0.15;
+    stroke-width: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sunset__sun {
+    animation: none;
+    transform: translateY(18px);
+  }
+
+  .sunset__ray {
+    animation: none;
+    opacity: 0.5;
+  }
+}

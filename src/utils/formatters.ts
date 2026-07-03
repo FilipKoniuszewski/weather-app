@@ -9,6 +9,8 @@ export const formatTemperature = (celsius: number, unit: Units['temperature']) =
   return `${Math.round(value)}°`;
 };
 
+export const isHotTemperature = (celsius: number) => celsius >= 30;
+
 export const formatWind = (kmh: number, unit: Units['wind']) => {
   const value = unit === 'mph' ? kmhToMph(kmh) : kmh;
   const rounded = Math.round(value);
@@ -28,4 +30,9 @@ export const formatPrecipitation = (mm: number, unit: Units['precipitation']) =>
 
 export const formatHumidity = (value: number) => `${Math.round(value)}%`;
 
-export const formatLocationLabel = (name: string, country: string) => `${name}, ${country}`;
+export const formatLocationLabel = (name: string, country?: string) => {
+  const parts = [name, country].filter(
+    (part): part is string => Boolean(part) && part !== 'undefined',
+  );
+  return parts.join(', ');
+};

@@ -10,12 +10,15 @@ type ForecastResponse = {
     precipitation: number;
     weather_code: number;
     wind_speed_10m: number;
+    is_day: number;
   };
   daily: {
     time: string[];
     weather_code: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
+    sunrise: string[];
+    sunset: string[];
   };
   hourly: {
     time: string[];
@@ -35,9 +38,10 @@ export const fetchWeather = async (location: Location): Promise<WeatherSnapshot>
       'precipitation',
       'weather_code',
       'wind_speed_10m',
+      'is_day',
     ].join(','),
     hourly: 'temperature_2m,weather_code',
-    daily: 'weather_code,temperature_2m_max,temperature_2m_min',
+    daily: 'weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset',
     forecast_days: '7',
     timezone: 'auto',
   });
@@ -61,12 +65,15 @@ export const fetchWeather = async (location: Location): Promise<WeatherSnapshot>
       windSpeed: data.current.wind_speed_10m,
       precipitation: data.current.precipitation,
       weatherCode: data.current.weather_code,
+      isDay: data.current.is_day === 1,
     },
     daily: {
       time: data.daily.time,
       weatherCode: data.daily.weather_code,
       temperatureMax: data.daily.temperature_2m_max,
       temperatureMin: data.daily.temperature_2m_min,
+      sunrise: data.daily.sunrise,
+      sunset: data.daily.sunset,
     },
     hourly: {
       time: data.hourly.time,

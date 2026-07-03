@@ -134,7 +134,7 @@ const SearchSection = ({
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => onSelectLocation(location)}
                   >
-                    {formatLocationLabel(location.name, location.country)}
+                    {formatLocationLabel(location.name, location.country || location.admin1)}
                   </button>
                 </li>
               ))}

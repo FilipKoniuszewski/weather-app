@@ -1,9 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { reverseGeocode } from '../api/reverseGeocoding';
 import { searchLocations } from '../api/geocoding';
 import { fetchWeather } from '../api/forecast';
 import type { Location, SearchStatus, WeatherSnapshot, WeatherStatus } from '../types/weather';
+import { getCurrentPosition } from '../utils/geolocation';
+import { getSavedLocation, saveLocation } from '../utils/lastLocation';
 
 const SEARCH_DEBOUNCE_MS = 350;
+let initialLocationDetectionStarted = false;
 
 export const useWeatherSearch = () => {
   const [query, setQuery] = useState('');
@@ -14,10 +18,6 @@ export const useWeatherSearch = () => {
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
-
-  // Skips the next debounced search when the query is set programmatically
-  // (e.g. after selecting a location), so we don't re-query the API.
-  const skipNextSearchRef = useRef(false);
 
   const loadWeather = useCallback(async (location: Location) => {
     setWeather(null);
@@ -31,19 +31,41 @@ export const useWeatherSearch = () => {
       setWeather(snapshot);
       setSelectedDayIndex(0);
       setWeatherStatus('ready');
+      saveLocation(location);
     } catch {
       setWeather(null);
       setWeatherStatus('error');
     }
   }, []);
 
-  // Search as the user types (debounced).
   useEffect(() => {
-    if (skipNextSearchRef.current) {
-      skipNextSearchRef.current = false;
-      return;
-    }
+    if (initialLocationDetectionStarted) return;
+    initialLocationDetectionStarted = true;
 
+    const detectLocation = async () => {
+      setWeatherStatus('loading');
+
+      try {
+        const position = await getCurrentPosition();
+        const location = await reverseGeocode(
+          position.coords.latitude,
+          position.coords.longitude,
+        );
+        await loadWeather(location);
+      } catch {
+        const saved = getSavedLocation();
+        if (saved) {
+          await loadWeather(saved);
+          return;
+        }
+        setWeatherStatus('idle');
+      }
+    };
+
+    void detectLocation();
+  }, [loadWeather]);
+
+  useEffect(() => {
     const trimmed = query.trim();
 
     if (trimmed.length < 2) {
@@ -85,11 +107,9 @@ export const useWeatherSearch = () => {
 
       if (trimmed.length < 2) return;
 
-      // If suggestions are already loaded, submitting loads the first match.
       if (suggestions.length > 0) {
+        setQuery('');
         await loadWeather(suggestions[0]);
-        skipNextSearchRef.current = true;
-        setQuery(`${suggestions[0].name}, ${suggestions[0].country}`);
         return;
       }
 
@@ -103,9 +123,8 @@ export const useWeatherSearch = () => {
         setActiveSuggestionIndex(results.length > 0 ? 0 : -1);
 
         if (results.length === 1) {
+          setQuery('');
           await loadWeather(results[0]);
-          skipNextSearchRef.current = true;
-          setQuery(`${results[0].name}, ${results[0].country}`);
         }
       } catch {
         setSuggestions([]);
@@ -119,8 +138,7 @@ export const useWeatherSearch = () => {
 
   const selectLocation = useCallback(
     async (location: Location) => {
-      skipNextSearchRef.current = true;
-      setQuery(`${location.name}, ${location.country}`);
+      setQuery('');
       await loadWeather(location);
     },
     [loadWeather],

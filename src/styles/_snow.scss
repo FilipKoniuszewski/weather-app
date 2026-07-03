@@ -1,0 +1,77 @@
+@use 'tokens' as *;
+
+.snow {
+  @include card-overlay(1);
+  --snow-fall: 13rem;
+
+  @include tablet {
+    --snow-fall: 20rem;
+  }
+}
+
+.snow__flake {
+  position: absolute;
+  top: -2rem;
+  color: hsl(210, 30%, 98%);
+  opacity: 0.88;
+  line-height: 1;
+  text-shadow: 0 0 3px hsla(210, 50%, 92%, 0.55);
+  animation: snow-fall var(--snow-duration) linear var(--snow-delay) infinite;
+  will-change: transform;
+}
+
+.snow__flake--sm {
+  font-size: 1.5rem;
+}
+
+.snow__flake--md {
+  font-size: 2rem;
+}
+
+.snow__flake--lg {
+  font-size: 2.5rem;
+}
+
+.snow__flake--blur-soft {
+  filter: blur(0.5px);
+  opacity: 0.72;
+}
+
+.snow__flake--blur-heavy {
+  filter: blur(1.5px);
+  opacity: 0.55;
+}
+
+.snow--shower .snow__flake {
+  opacity: 0.92;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translate3d(var(--snow-left-ini), 0, 0);
+  }
+
+  100% {
+    transform: translate3d(var(--snow-left-end), var(--snow-fall), 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snow__flake {
+    animation: none;
+    top: 12%;
+    opacity: 0.5;
+  }
+
+  .snow__flake:nth-child(3n) {
+    top: 38%;
+  }
+
+  .snow__flake:nth-child(5n) {
+    top: 62%;
+  }
+
+  .snow__flake:nth-child(7n) {
+    top: 82%;
+  }
+}

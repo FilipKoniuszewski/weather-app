@@ -121,7 +121,6 @@
   text-align: left;
   @include interactive;
 
-  // Inset focus ring so it isn't clipped by the container's overflow: hidden.
   &:focus-visible {
     outline: 2px solid $color-orange-500;
     outline-offset: -2px;

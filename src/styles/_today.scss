@@ -1,19 +1,309 @@
 @use 'tokens' as *;
 
+$today-meta-date-color: $color-neutral-200;
+$today-meta-time-color: hsla(0, 0%, 100%, 0.88);
+
 .today {
   position: relative;
   overflow: hidden;
   min-height: 11rem;
   border-radius: $radius-lg;
-  background:
-    url('#{$asset-base}assets/images/bg-today-small.svg') center / cover no-repeat,
-    linear-gradient(135deg, $color-blue-500 0%, $color-blue-700 100%);
+  background: linear-gradient(135deg, $color-blue-500 0%, $color-blue-700 100%);
 
   @include tablet {
     min-height: 17.875rem;
-    background-image:
-      url('#{$asset-base}assets/images/bg-today-large.svg'),
-      linear-gradient(135deg, $color-blue-500 0%, $color-blue-700 100%);
+    background-image: linear-gradient(135deg, $color-blue-500 0%, $color-blue-700 100%);
+  }
+}
+
+.today--drizzle,
+.today--drizzle.today {
+  background: linear-gradient(
+    165deg,
+    hsl(220, 22%, 38%) 0%,
+    hsl(222, 24%, 30%) 55%,
+    hsl(225, 26%, 26%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      165deg,
+      hsl(220, 22%, 38%) 0%,
+      hsl(222, 24%, 30%) 55%,
+      hsl(225, 26%, 26%) 100%
+    );
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 20% 4%, hsla(220, 20%, 78%, 0.2), transparent 72%),
+      radial-gradient(55% 45% at 70% 0%, hsla(222, 18%, 74%, 0.16), transparent 70%),
+      radial-gradient(70% 55% at 45% -10%, hsla(225, 16%, 70%, 0.14), transparent 75%);
+    filter: blur(8px);
+  }
+}
+
+.today--rainy,
+.today--rainy.today {
+  background:
+    linear-gradient(160deg, hsl(240, 30%, 22%) 0%, hsl(245, 45%, 12%) 100%);
+
+  @include tablet {
+    background-image: linear-gradient(160deg, hsl(240, 30%, 22%) 0%, hsl(245, 45%, 12%) 100%);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(55% 45% at 18% 6%, hsla(240, 18%, 72%, 0.22), transparent 70%),
+      radial-gradient(50% 42% at 62% -2%, hsla(240, 15%, 68%, 0.18), transparent 70%),
+      radial-gradient(65% 50% at 88% 8%, hsla(240, 16%, 70%, 0.16), transparent 72%),
+      radial-gradient(70% 55% at 40% -12%, hsla(240, 14%, 64%, 0.14), transparent 75%);
+    filter: blur(6px);
+  }
+}
+
+.today--storm-rain,
+.today--storm-rain.today--rainy {
+  background: linear-gradient(
+    165deg,
+    hsl(240, 36%, 14%) 0%,
+    hsl(246, 48%, 8%) 55%,
+    hsl(250, 42%, 10%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      165deg,
+      hsl(240, 36%, 14%) 0%,
+      hsl(246, 48%, 8%) 55%,
+      hsl(250, 42%, 10%) 100%
+    );
+  }
+
+  &::before {
+    background:
+      radial-gradient(60% 50% at 14% 2%, hsla(240, 16%, 55%, 0.16), transparent 72%),
+      radial-gradient(55% 45% at 72% 0%, hsla(245, 14%, 50%, 0.14), transparent 70%),
+      radial-gradient(75% 58% at 42% -14%, hsla(248, 18%, 45%, 0.12), transparent 75%);
+  }
+}
+
+.today--sunny,
+.today--partly-cloudy,
+.today--sunny.today,
+.today--partly-cloudy.today {
+  background: linear-gradient(
+    180deg,
+    hsl(208, 85%, 42%) 0%,
+    hsl(202, 78%, 58%) 55%,
+    hsl(198, 70%, 68%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(208, 85%, 42%) 0%,
+      hsl(202, 78%, 58%) 55%,
+      hsl(198, 70%, 68%) 100%
+    );
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -26%;
+    right: -10%;
+    z-index: 0;
+    width: clamp(13rem, 55vw, 19rem);
+    height: clamp(13rem, 55vw, 19rem);
+    pointer-events: none;
+    background: url('#{$asset-base}assets/images/sun.png') center / contain no-repeat;
+  }
+
+  .today__date,
+  .today__time,
+  .today__sun-time {
+    color: #fff;
+    text-shadow: 0 1px 3px hsla(215, 60%, 20%, 0.45);
+  }
+}
+
+.today--clear-night.today {
+  background: linear-gradient(
+    180deg,
+    hsl(228, 48%, 7%) 0%,
+    hsl(226, 44%, 11%) 55%,
+    hsl(222, 40%, 16%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(228, 48%, 7%) 0%,
+      hsl(226, 44%, 11%) 55%,
+      hsl(222, 40%, 16%) 100%
+    );
+  }
+}
+
+.today--fog,
+.today--fog.today,
+.today--rime-fog,
+.today--rime-fog.today {
+  background: linear-gradient(
+    180deg,
+    hsl(210, 8%, 62%) 0%,
+    hsl(210, 6%, 55%) 55%,
+    hsl(208, 5%, 49%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(210, 8%, 62%) 0%,
+      hsl(210, 6%, 55%) 55%,
+      hsl(208, 5%, 49%) 100%
+    );
+  }
+
+  .today__date,
+  .today__time,
+  .today__sun-time {
+    color: #fff;
+    text-shadow: 0 1px 3px hsla(220, 30%, 15%, 0.4);
+  }
+}
+
+.today--rime-fog,
+.today--rime-fog.today {
+  background: linear-gradient(
+    180deg,
+    hsl(200, 12%, 66%) 0%,
+    hsl(202, 10%, 58%) 55%,
+    hsl(204, 8%, 52%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(200, 12%, 66%) 0%,
+      hsl(202, 10%, 58%) 55%,
+      hsl(204, 8%, 52%) 100%
+    );
+  }
+}
+
+.today--snowy,
+.today--snowy.today {
+  background: linear-gradient(
+    180deg,
+    hsl(215, 32%, 48%) 0%,
+    hsl(218, 28%, 38%) 55%,
+    hsl(222, 26%, 32%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(215, 32%, 48%) 0%,
+      hsl(218, 28%, 38%) 55%,
+      hsl(222, 26%, 32%) 100%
+    );
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(65% 55% at 18% 8%, hsla(210, 35%, 88%, 0.18), transparent 72%),
+      radial-gradient(55% 50% at 82% 12%, hsla(212, 30%, 85%, 0.14), transparent 70%),
+      radial-gradient(70% 60% at 50% -8%, hsla(215, 28%, 90%, 0.12), transparent 75%);
+    filter: blur(6px);
+  }
+
+  .today__date,
+  .today__time,
+  .today__sun-time {
+    color: #fff;
+    text-shadow: 0 1px 3px hsla(220, 35%, 15%, 0.4);
+  }
+}
+
+.today--overcast,
+.today--overcast.today {
+  background: linear-gradient(
+    180deg,
+    hsl(215, 22%, 62%) 0%,
+    hsl(218, 18%, 52%) 55%,
+    hsl(220, 16%, 46%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      180deg,
+      hsl(215, 22%, 62%) 0%,
+      hsl(218, 18%, 52%) 55%,
+      hsl(220, 16%, 46%) 100%
+    );
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      hsla(222, 30%, 10%, 0.55) 0%,
+      hsla(222, 30%, 10%, 0.15) 45%,
+      transparent 70%
+    );
+  }
+}
+
+.today--storm,
+.today--storm.today {
+  background: linear-gradient(
+    165deg,
+    hsl(240, 38%, 8%) 0%,
+    hsl(248, 52%, 5%) 55%,
+    hsl(252, 45%, 7%) 100%
+  );
+
+  @include tablet {
+    background-image: linear-gradient(
+      165deg,
+      hsl(240, 38%, 8%) 0%,
+      hsl(248, 52%, 5%) 55%,
+      hsl(252, 45%, 7%) 100%
+    );
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(70% 55% at 12% 0%, hsla(240, 20%, 45%, 0.2), transparent 72%),
+      radial-gradient(65% 50% at 78% 4%, hsla(245, 18%, 40%, 0.16), transparent 70%),
+      radial-gradient(80% 60% at 50% -18%, hsla(250, 22%, 35%, 0.18), transparent 75%);
+    filter: blur(8px);
   }
 }
 
@@ -24,6 +314,8 @@
 }
 
 .today__content {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,11 +339,54 @@
   line-height: 1.2;
 }
 
-.today__date {
-  display: block;
+.today__datetime {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
   margin-top: 0.375rem;
-  color: $color-neutral-200;
+  min-width: 0;
+}
+
+.today__date {
+  min-width: 0;
+  color: $today-meta-date-color;
   font-size: 1rem;
+}
+
+.today__time,
+.today__sun-time {
+  color: $today-meta-time-color;
+  font-variant-numeric: tabular-nums;
+}
+
+.today__time {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.today__sun {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.875rem;
+  padding: 0.3rem 0.85rem 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: hsla(0, 0%, 100%, 0.14);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+
+.today__sun-icon {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.today__sun-label {
+  font-weight: 600;
 }
 
 .today__summary {
@@ -70,6 +405,22 @@
     width: 5.5rem;
     height: 5.5rem;
   }
+}
+
+.today__icon-lottie {
+  flex-shrink: 0;
+  width: 4rem;
+  height: 4rem;
+
+  @include tablet {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+}
+
+.today__icon-lottie__animation {
+  width: 100%;
+  height: 100%;
 }
 
 .today__temperature {

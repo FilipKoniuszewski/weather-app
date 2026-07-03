@@ -1,0 +1,100 @@
+@use 'tokens' as *;
+
+.clouds {
+  @include card-overlay(1);
+}
+
+.clouds__cloud {
+  position: absolute;
+  left: -20%;
+  width: 3.375rem;
+  height: 0.3125rem;
+  border-radius: 0.625rem;
+  background: var(--cloud-body);
+  transform: scale(var(--cloud-scale));
+  transform-origin: left center;
+  animation: cloud-drift var(--cloud-duration) linear var(--cloud-delay) infinite;
+
+  span {
+    position: absolute;
+    bottom: 0;
+    left: -3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--cloud-puff);
+    box-shadow: inset -2px -3px 0 0 var(--cloud-body);
+
+    &:nth-child(2) {
+      margin: 0 0 4px 13px;
+      transform: scale(1.6);
+      z-index: 9;
+    }
+
+    &:nth-child(3) {
+      margin: 0 0 9px 32px;
+      transform: scale(2.4);
+      z-index: 8;
+    }
+
+    &:nth-child(4) {
+      margin: 0 0 2px 50px;
+      transform: scale(1.3);
+      z-index: 7;
+    }
+  }
+}
+
+.clouds--light .clouds__cloud {
+  --cloud-body: hsl(210, 30%, 96%);
+  --cloud-puff: hsl(0, 0%, 100%);
+  opacity: 0.9;
+}
+
+.clouds--overcast .clouds__cloud {
+  --cloud-body: hsl(215, 14%, 82%);
+  --cloud-puff: hsl(210, 16%, 90%);
+  opacity: 0.92;
+}
+
+@keyframes cloud-drift {
+  from {
+    left: -20%;
+  }
+
+  to {
+    left: 120%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clouds__cloud {
+    animation: none;
+    left: 12%;
+  }
+
+  .clouds__cloud:nth-child(2) {
+    left: 48%;
+    top: 20%;
+  }
+
+  .clouds__cloud:nth-child(3) {
+    left: 72%;
+    top: 10%;
+  }
+
+  .clouds--overcast .clouds__cloud:nth-child(4) {
+    left: 28%;
+    top: 40%;
+  }
+
+  .clouds--overcast .clouds__cloud:nth-child(5) {
+    left: 58%;
+    top: 34%;
+  }
+
+  .clouds--overcast .clouds__cloud:nth-child(6) {
+    left: 82%;
+    top: 46%;
+  }
+}

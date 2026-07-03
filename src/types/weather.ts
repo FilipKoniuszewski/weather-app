@@ -19,12 +19,15 @@ export type WeatherSnapshot = {
     precipitation: number;
     weatherCode: number;
     time: string;
+    isDay: boolean;
   };
   daily: {
     time: string[];
     weatherCode: number[];
     temperatureMax: number[];
     temperatureMin: number[];
+    sunrise: string[];
+    sunset: string[];
   };
   hourly: {
     time: string[];
