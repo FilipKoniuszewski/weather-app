@@ -1,0 +1,26 @@
+@use 'tokens' as *;
+
+.dashboard {
+  display: grid;
+  gap: 1.5rem;
+
+  @include desktop {
+    grid-template-columns: minmax(0, 1fr) 18.75rem;
+    align-items: stretch;
+    gap: 1.5rem 2rem;
+  }
+}
+
+.dashboard__primary {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.dashboard__aside {
+  min-width: 0;
+
+  @include desktop {
+    position: relative;
+  }
+}

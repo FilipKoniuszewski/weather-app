@@ -1,0 +1,39 @@
+@use 'tokens' as *;
+
+.api-error {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  max-width: 28rem;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.api-error__icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.api-error__title {
+  font-family: $font-display;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+}
+
+.api-error__message {
+  color: $color-neutral-300;
+  line-height: 1.5;
+}
+
+.api-error__retry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  background-color: $color-neutral-800;
+  border: 1px solid $color-neutral-700;
+  border-radius: $radius-md;
+  @include interactive;
+}
