@@ -2,6 +2,14 @@
 
 SPA built for the [Frontend Mentor Weather app challenge](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49). Search for a city, view current conditions, and browse daily and hourly forecasts with metric/imperial unit controls.
 
+**Live preview:** [filipkoniuszewski.github.io/weather-app](https://filipkoniuszewski.github.io/weather-app/)
+
+![Weather App preview](./screenshots/preview.png)
+
+## Built with
+
+React · TypeScript · Vite · SASS · Fetch
+
 ## Enhancements beyond the challenge
 
 Additional features added on top of the base Frontend Mentor scope:
