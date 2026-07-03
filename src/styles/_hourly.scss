@@ -25,7 +25,6 @@
 
 .day-select {
   position: relative;
-  min-width: 7.5rem;
 }
 
 .day-select__trigger {
@@ -33,9 +32,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  width: 100%;
   padding: 0.5rem 0.875rem;
   font-weight: 500;
+  white-space: nowrap;
   background-color: $color-neutral-700;
   border: 1px solid transparent;
   border-radius: $radius-sm;

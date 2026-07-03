@@ -50,8 +50,14 @@
     border-color 200ms ease,
     box-shadow 200ms ease;
 
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border-color: $color-blue-500;
+    }
+  }
+
   &:focus-within {
-    border-color: $color-blue-500;
+    border-color: transparent;
     box-shadow: 0 0 0 0.1875rem $color-orange-500;
   }
 }
@@ -114,6 +120,12 @@
   padding: 0.875rem 1rem;
   text-align: left;
   @include interactive;
+
+  // Inset focus ring so it isn't clipped by the container's overflow: hidden.
+  &:focus-visible {
+    outline: 2px solid $color-orange-500;
+    outline-offset: -2px;
+  }
 
   &--active,
   &[aria-selected='true'] {
