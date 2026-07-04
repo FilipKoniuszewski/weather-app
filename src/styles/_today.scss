@@ -128,6 +128,13 @@ $today-meta-time-color: hsla(0, 0%, 100%, 0.88);
     height: clamp(13rem, 55vw, 19rem);
     pointer-events: none;
     background: url('#{$asset-base}assets/images/sun.png') center / contain no-repeat;
+
+    @media (max-width: 47.99em) {
+      top: -38%;
+      right: -22%;
+      width: clamp(9.5rem, 42vw, 12rem);
+      height: clamp(9.5rem, 42vw, 12rem);
+    }
   }
 
   .today__date,
