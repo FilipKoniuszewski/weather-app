@@ -50,19 +50,17 @@ const TodayCard = ({ weather, units, isLoading = false }: TodayCardProps) => {
       {theme.showStars && <Stars />}
 
       <div className="today__content">
-        <div className="today__lead">
-          <div className="today__meta">
-            <h2 className="today__location">
-              {formatLocationLabel(weather.location.name, weather.location.country || weather.location.admin1)}
-            </h2>
-            <div className="today__datetime">
-              <time className="today__date" dateTime={weather.current.time}>
-                {formatLongDate(weather.current.time, weather.timezone)}
-              </time>
-              <time className="today__time" dateTime={weather.current.time}>
-                {formatCurrentTime(weather.timezone)}
-              </time>
-            </div>
+        <div className="today__meta">
+          <h2 className="today__location">
+            {formatLocationLabel(weather.location.name, weather.location.country || weather.location.admin1)}
+          </h2>
+          <div className="today__datetime">
+            <time className="today__date" dateTime={weather.current.time}>
+              {formatLongDate(weather.current.time, weather.timezone)}
+            </time>
+            <time className="today__time" dateTime={weather.current.time}>
+              {formatCurrentTime(weather.timezone)}
+            </time>
           </div>
 
           {sunEvent && (
